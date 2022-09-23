@@ -10,6 +10,7 @@ HERE = Path(__file__).parent.resolve()
 
 
 def test_connection_refused():
+    """Should rise connection exception"""
     client = Client(uri="tcp://0.0.0.0:1883", client_id="some_test_client_id")
     with pytest.raises(ConnectionRefusedError):
         client.connect()
