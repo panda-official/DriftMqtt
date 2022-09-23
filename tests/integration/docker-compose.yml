@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mqtt_broker:
+    image: registry.panda.technology/drift/docker/mqtt_broker:latest
+    expose:
+      - "9001"
+      - "1883"
+    ports:
+      - "1883:1883"
+      - "9001:9001"

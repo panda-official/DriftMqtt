@@ -1,0 +1,6 @@
+venv/
+lib/
+build/
+dist/
+pkg/drift_mqtt.egg-info/
+pkg/drift_mqtt/VERSION
