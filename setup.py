@@ -6,9 +6,9 @@ from pathlib import Path
 from setuptools import setup, find_packages
 
 PACKAGE_NAME = "drift-mqtt"
-MAJOR_VERSION = 1
-MINOR_VERSION = 0
-PATCH_VERSION = 1  # probably will never be used
+MAJOR_VERSION = 0
+MINOR_VERSION = 1
+PATCH_VERSION = 0
 VERSION_SUFFIX = os.getenv("VERSION_SUFFIX")
 
 HERE = Path(__file__).parent.resolve()
@@ -39,7 +39,7 @@ def get_long_description(base_path: Path):
 setup(
     name=PACKAGE_NAME,
     version=build_version(),
-    description="Drift MQTT tools",
+    description="A wrapper around Python Paho Mqtt library",
     long_description=get_long_description(HERE),
     long_description_content_type="text/markdown",
     url="https://gitlab.panda.technology/drift/sdk/drift-mqtt",
@@ -49,15 +49,13 @@ setup(
     package_data={"": ["VERSION"]},
     packages=find_packages(where="pkg"),
     python_requires=">=3.7",
-    install_requires=["paho-mqtt==1.5.0"],
+    install_requires=["paho-mqtt~=1.6.0"],
     extras_require={
         "test": [
-            "pytest==6.1.2",
-            "lovely-pytest-docker==0.2.0",
-            "six==1.15.0",
+            "pytest~=6.1.2",
         ],
         "lint": [
-            "pylint==2.5.3",
+            "pylint~=2.5.3",
         ],
     },
 )
