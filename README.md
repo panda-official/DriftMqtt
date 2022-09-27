@@ -1,5 +1,10 @@
 # Drift MQTT tools
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/panda-official/DriftMqtt/ci)
+![PyPI](https://img.shields.io/pypi/v/drift-mqtt)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/drift-mqtt)
+
+
 A collection of helpers to work with MQTT:
 * `Client` - wrapper around `paho.mqtt.Client` that correctly handles subscriptions after reconnect
 
