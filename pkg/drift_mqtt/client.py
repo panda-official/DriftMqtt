@@ -89,7 +89,8 @@ class Client:
     @staticmethod
     def on_disconnect(_client, _userdata, return_code):
         """Callback on mqtt disconnected"""
-        # this is a bug in paho, return_code 1 is a general error (connection lost in this case)
+        # this is a bug in paho, return_code 1 is a general error
+        # (connection lost in this case)
         if return_code == mqtt.MQTT_ERR_NOMEM:
             return_code = mqtt.MQTT_ERR_CONN_LOST
 
