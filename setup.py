@@ -51,11 +51,9 @@ setup(
     python_requires=">=3.7",
     install_requires=["paho-mqtt~=1.6.0"],
     extras_require={
-        "test": [
-            "pytest~=6.1.2",
-        ],
+        "test": ["pytest~=7.1.3", "pytest-mock~=3.8.2 "],
         "lint": [
-            "pylint~=2.5.3",
+            "pylint~=2.15.3",
         ],
         "format": ["black~=22.8.0"],
     },
