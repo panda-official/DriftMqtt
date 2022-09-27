@@ -12,7 +12,7 @@ def _load_version() -> str:
     from pathlib import Path  # pylint: disable=import-outside-toplevel
 
     here = Path(__file__).parent
-    with open(here / "VERSION", "r") as version_file:
+    with open(here / "VERSION", "r", encoding="utf-8") as version_file:
         return version_file.read().strip()
 
 
