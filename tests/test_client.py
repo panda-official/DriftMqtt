@@ -1,12 +1,11 @@
 """ Test Mqtt client
 """
 from pathlib import Path
-from typing import List, Optional
 
 import pytest
+from paho.mqtt.client import MQTTMessage
 
 from drift_mqtt import Client
-from drift_mqtt.client import MQTTMessage
 
 HERE = Path(__file__).parent.resolve()
 
@@ -26,11 +25,19 @@ def test__connection_refused():
         client.connect()
 
 
-last_message: List[Optional[MQTTMessage]] = [None]
+@pytest.fixture(name="last_message")
+def _make_last_message():
+    last_message = [None]
+    return last_message
 
 
-def hander(message: MQTTMessage):
-    last_message[0] = message
+@pytest.fixture(name="handler")
+def _make_handler(last_message):
+    def handler(message: MQTTMessage):
+        """Simple handler just to keep a received message"""
+        last_message[0] = message
+
+    return handler
 
 
 @pytest.mark.parametrize(
@@ -41,11 +48,13 @@ def hander(message: MQTTMessage):
         ("drft/#/subpath", b"drft/topic/subpath"),
     ],
 )
-def test__handle_subscriptions(paho_client, topic: str, received_topic: bytes):
+def test__handle_subscriptions(
+    paho_client, topic, received_topic, handler, last_message
+):
     """Should parse topic and call handlers"""
     client = Client(uri="tcp://0.0.0.0:1883")
 
-    client.subscribe(topic, hander)
+    client.subscribe(topic, handler)
     paho_client.on_message(None, None, message=MQTTMessage(topic=received_topic))
     assert last_message[0].topic == received_topic.decode("ascii")
 
@@ -58,10 +67,10 @@ def test__handle_subscriptions(paho_client, topic: str, received_topic: bytes):
         ("drft/#/subpath", b"drft/topic/skip"),
     ],
 )
-def test__handle_subscriptions(paho_client, topic: str, received_topic: bytes):
-    """Should parse topic and skip topics"""
+def test__skip_subscriptions(paho_client, topic, received_topic, handler, last_message):
+    """Should parse topic and skip"""
     client = Client(uri="tcp://0.0.0.0:1883")
 
-    client.subscribe(topic, hander)
+    client.subscribe(topic, handler)
     paho_client.on_message(None, None, message=MQTTMessage(topic=received_topic))
     assert last_message[0] is None
