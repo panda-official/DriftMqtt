@@ -50,14 +50,8 @@ class Client:
     def on_message(self, _client, _userdata, message: MQTTMessage):
         """Message read callback"""
         for sub in self._subscriptions:
-            topic = message.topic
-            match = False
-            if "#" in sub.topic:
-                match = re.match(sub.topic.replace("#", "(.*)"), topic) is not None
-            else:
-                match = topic == sub.topic
             try:
-                if match:
+                if re.match(sub.topic.replace("#", "(.*)"), message.topic) is not None:
                     sub.handler(message)
             except Exception as err:  # pylint: disable=broad-except
                 logger.exception("Error in a message handler: %s", err)
