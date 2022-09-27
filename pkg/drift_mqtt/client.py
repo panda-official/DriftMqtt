@@ -2,10 +2,13 @@
 """
 
 import logging
+import re
 from dataclasses import dataclass
 from typing import Callable
 from urllib.parse import urlparse
 
+from paho.mqtt.client import Client as PahoClient
+from paho.mqtt.client import MQTTMessage
 import paho.mqtt.client as mqtt
 
 logger = logging.getLogger("drift-mqtt")
@@ -35,7 +38,7 @@ class Client:
         self._uri = urlparse(uri)
         self._transport = "websockets" if self._uri.scheme == "ws" else "tcp"
         # TODO: check if we need v311 or v5 # pylint: disable=fixme
-        self._client = mqtt.Client(client_id=client_id, transport=self._transport)
+        self._client = PahoClient(client_id=client_id, transport=self._transport)
         self._client.on_connect = self.on_connect
         self._client.on_disconnect = self.on_disconnect
         self._client.on_subscribe = self.on_subscribe
@@ -44,14 +47,14 @@ class Client:
         self._client.enable_logger()
         self._subscriptions = []
 
-    def on_message(self, _client, _userdata, message: mqtt.MQTTMessage):
+    def on_message(self, _client, _userdata, message: MQTTMessage):
         """Message read callback"""
         for sub in self._subscriptions:
-            if message.topic.startswith(sub.topic):
-                try:
+            try:
+                if re.match(sub.topic.replace("#", "(.*)"), message.topic):
                     sub.handler(message)
-                except Exception:  # pylint: disable=broad-except
-                    logger.exception("Error in a message handler")
+            except Exception as err:  # pylint: disable=broad-except
+                logger.exception("Error in a message handler: %s", err)
 
     def __getattr__(self, item):
         """Forward unknown methods to MQTT client"""
@@ -80,7 +83,8 @@ class Client:
     @staticmethod
     def on_disconnect(_client, _userdata, return_code):
         """Callback on mqtt disconnected"""
-        # this is a bug in paho, return_code 1 is a general error (connection lost in this case)
+        # this is a bug in paho, return_code 1 is a general error
+        # (connection lost in this case)
         if return_code == mqtt.MQTT_ERR_NOMEM:
             return_code = mqtt.MQTT_ERR_CONN_LOST
 
