@@ -51,7 +51,7 @@ class Client:
         """Message read callback"""
         for sub in self._subscriptions:
             try:
-                if re.match(sub.topic.replace("#", "(.*)"), message.topic) is not None:
+                if re.match(sub.topic.replace("#", "(.*)"), message.topic):
                     sub.handler(message)
             except Exception as err:  # pylint: disable=broad-except
                 logger.exception("Error in a message handler: %s", err)
