@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed:
 
 - Subscribing topics with wildcards, [PR-1](https://github.com/panda-official/DriftMqtt/pull/1)
+- Add installation instructions to README, [PR-2](https://github.com/panda-official/DriftMqtt/pull/2) 
 
 ## 0.1.0 - 2022-09-23
 

@@ -9,6 +9,18 @@ A collection of helpers to work with MQTT:
 * `Client` - wrapper around `paho.mqtt.Client` that correctly handles subscriptions after reconnect
 
 
+## Installation
+
+```bash
+pip install drift-mqtt
+```
+
+Or get the latest version from GitHub:
+```bash
+pip install git+https://github.com/panda-official/DriftMqtt.git
+```
+
+
 ## Usage
 
 Producer
