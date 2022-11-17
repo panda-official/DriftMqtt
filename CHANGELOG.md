@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+* DRIFT-534: Dependencies compatibility table, [PR-3](https://github.com/panda-official/DriftMqtt/pull/3)
+
 ## 0.1.1 - 2022-09-27
 
 ### Fixed:
