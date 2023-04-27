@@ -37,7 +37,9 @@ class Client:
         """
         self._uri = urlparse(uri)
         self._transport = "websockets" if self._uri.scheme == "ws" else "tcp"
-        self._client = PahoClient(client_id=client_id, transport=self._transport, protocol=mqtt.MQTTv5)
+        self._client = PahoClient(
+            client_id=client_id, transport=self._transport, protocol=mqtt.MQTTv5
+        )
         self._client.on_connect = self.on_connect
         self._client.on_disconnect = self.on_disconnect
         self._client.on_subscribe = self.on_subscribe
