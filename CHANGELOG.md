@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 0.2.0 - 2023-04-28
+
 - Support for MQTTv5, [PR-4](https://github.com/panda-official/DriftMqtt/pull/4) 
 - DRIFT-534: Dependencies compatibility table, [PR-3](https://github.com/panda-official/DriftMqtt/pull/3)
 
