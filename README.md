@@ -1,6 +1,6 @@
 # Drift MQTT tools
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/panda-official/DriftMqtt/ci)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/panda-official/DriftMqtt/ci.yml?branch=develop)](https://github.com/panda-official/DriftMqtt/actions)
 ![PyPI](https://img.shields.io/pypi/v/drift-mqtt)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/drift-mqtt)
 
