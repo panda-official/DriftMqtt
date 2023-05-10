@@ -54,6 +54,12 @@ class Client:
             try:
                 if re.match(sub.topic.replace("#", "(.*)"), message.topic):
                     sub.handler(message)
+                elif (
+                    re.search(r"\$share\/([a-zA-Z-_]*)\/(.*)", sub.topic).group(2)
+                    == message.topic
+                ):
+                    sub.handler(message)
+
             except Exception as err:  # pylint: disable=broad-except
                 logger.exception("Error in a message handler: %s", err)
 
